@@ -8,6 +8,7 @@ const boxWidth = ref(0);
 const sorting = ref(false);
 const speed = ref(5);
 const size = ref(5);
+const swaps = ref(0);
 
 function generateRandomNumbers(count, min, max) {
   return Array.from(
@@ -42,6 +43,7 @@ const bubbleSort = async () => {
   for (let i = 0; i < len - 1; i++) {
     for (let j = 0; j < len - i - 1; j++) {
       if (array.value[j] > array.value[j + 1]) {
+        swaps.value++;
         const temp = array.value[j];
         array.value[j] = array.value[j + 1];
         array.value[j + 1] = temp;
@@ -72,6 +74,18 @@ onMounted(() => {
   <div id="app" class="container my-4">
     <h1 class="text-center mb-4">Sorting Algorithm Visualization</h1>
 
+    <h2 class="text-center">Bubble Sort</h2>
+    <div class="text-center mt-4">
+      <button
+        type="button"
+        class="btn btn-primary"
+        @click="startSorting"
+        :disabled="sorting"
+      >
+        Start
+      </button>
+    </div>
+    <p class="text-center fs-5">Swaps: {{ swaps }}</p>
     <div class="row">
       <div class="col-12">
         <canvas ref="canvas" class="w-100" width="800" height="200"></canvas>
@@ -114,17 +128,6 @@ onMounted(() => {
       <div class="col-2">
         <span class="fs-3">{{ size }}</span>
       </div>
-    </div>
-
-    <div class="text-center mt-4">
-      <button
-        type="button"
-        class="btn btn-primary"
-        @click="startSorting"
-        :disabled="sorting"
-      >
-        Start
-      </button>
     </div>
   </div>
 </template>
